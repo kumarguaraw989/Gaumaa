@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".views.activity.OtpActivity">
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/main_color"
+        app:navigationIcon="@drawable/back"
+        app:navigationIconTint="@color/white"
+        app:subtitle="Otp sent to your number +91"
+        app:subtitleTextAppearance="@style/TextAppearance.Material3.LabelMedium"
+        app:subtitleTextColor="@color/white"
+        app:title="OTP Verification"
+        app:titleTextAppearance="@style/TextAppearance.Material3.BodyLarge"
+        app:titleTextColor="@color/white" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/toolBar"
+        android:orientation="vertical"
+        android:padding="15dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:text="Enter OTP"
+            android:textColor="@color/black"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:text="Verify your mobile number, enter 6 digit code sent to your mobile number."
+            android:textColor="@color/black"
+            android:textSize="12sp" />
+
+        <com.chaos.view.PinView
+            android:id="@+id/otpView"
+            style="@style/PinWidget.PinView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:cursorVisible="true"
+            android:fontFamily="@font/poppins"
+            android:hint="Hint."
+            android:inputType="numberDecimal"
+            android:itemBackground="@color/white"
+            android:padding="5dp"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:cursorWidth="2dp"
+            app:hideLineWhenFilled="false"
+            app:itemCount="6"
+            app:itemHeight="50dp"
+            app:itemRadius="5dp"
+            app:itemSpacing="10dp"
+            app:itemWidth="50dp"
+            app:lineColor="@color/main_color"
+            app:lineWidth="1dp"
+            app:viewType="rectangle" />
+
+        <ProgressBar
+            android:id="@+id/otpProgress"
+            android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"
+            android:indeterminateTint="@color/main_color" />
+
+    </LinearLayout>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnVerifyOtp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="20dp"
+        android:layout_marginTop="50dp"
+        android:backgroundTint="@color/main_color"
+        android:padding="15dp"
+        android:text="Verify OTP"
+        android:textColor="@color/white"
+        app:cornerRadius="5dp" />
+
+</RelativeLayout>
