@@ -9,14 +9,17 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.Settings;
+import android.text.TextPaint;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -45,6 +48,7 @@ import com.ecom.agrisewa.handler.ProductCallback;
 import com.ecom.agrisewa.model.BannerRequest;
 import com.ecom.agrisewa.model.BannerResponse;
 import com.ecom.agrisewa.model.CartAmount;
+import com.ecom.agrisewa.model.CartCount;
 import com.ecom.agrisewa.model.CartRequest;
 import com.ecom.agrisewa.model.CartResponse;
 import com.ecom.agrisewa.model.CategoryRequest;
@@ -120,21 +124,41 @@ public class DashboardActivity extends AppCompatActivity implements CategoryCall
                 showDrawerDialog();
             }
         });
+    }
 
-        toolBar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+
+    public void getCartCount() {
+        ServiceApi api = ApiClient.getClient().create(ServiceApi.class);
+        @SuppressLint("HardwareIds") Call<CartCount> call = api.getCartCount(
+                Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID),
+                loginResponse.getToken()
+        );
+
+        call.enqueue(new Callback<CartCount>() {
             @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                if (item.getItemId() == R.id.notification) {
-                    return true;
-                } else if (item.getItemId() == R.id.cart) {
-                    showCartDialog();
-                    return true;
-                }
-                return false;
+            public void onResponse(Call<CartCount> call, Response<CartCount> response) {
+                    int cartCountValue = response.body().getCount();
+                    Log.e("TAG", "onResponse: getCartCount"+cartCountValue);
+                    TextView cartCountTextView = findViewById(R.id.cart_count);
+                    if (response.body()!=null&&response.body().getStatus()){
+                        cartCountTextView.setText(String.valueOf(cartCountValue));
+                    }
+            }
+
+            @Override
+            public void onFailure(Call<CartCount> call, Throwable throwable) {
+                Log.e("EXCEPTION", throwable.getLocalizedMessage());
             }
         });
-
     }
+
+    // Similarly modify your getNotificationCount method
+    public void getNotificationCount() {
+        ServiceApi api = ApiClient.getClient().create(ServiceApi.class);
+        // Your API call logic here
+        // Update notification badge count similarly to cart
+    }
+
 
     @Override
     protected void onResume() {
@@ -142,6 +166,9 @@ public class DashboardActivity extends AppCompatActivity implements CategoryCall
         localStorage = LocalStorage.getInstance(DashboardActivity.this);
         loginResponse = new Gson().fromJson(localStorage.getLoginModel(), LoginResponse.class);
         getBannerImages();
+        Log.e("TAG", "onResume: getCartCount");
+        getCartCount();
+        getNotificationCount();
     }
 
     public void getBannerImages() {
@@ -393,7 +420,31 @@ public class DashboardActivity extends AppCompatActivity implements CategoryCall
         cartDialog.getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         cartDialog.getWindow().setStatusBarColor(getColor(R.color.main_color));
     }
-    public void getCartCount(){
+    /*public void getCartCount(){
+        ServiceApi api = ApiClient.getClient().create(ServiceApi.class);
+        Toast.makeText(this, "cart is here !", Toast.LENGTH_SHORT).show();
+        Call<CartRequest> call = api.getCartCount(Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID)
+                , loginResponse.getToken());
+        call.enqueue(new Callback<CartRequest>() {
+            @Override
+            public void onResponse(Call<CartRequest> call, Response<CartRequest> response) {
+                Log.e("TAG", "onResponse: cart is here !"+response);
+                if (response.body() != null) {
+                    if (response.body().getStatus()) {
+
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<CartRequest> call, Throwable t) {
+                Log.e("EXCEPTION", t.getLocalizedMessage());
+            }
+        });
+    }
+
+    ///Model not prepared yet !
+    public void getNotificationCount(){
         ServiceApi api = ApiClient.getClient().create(ServiceApi.class);
         Call<CartRequest> call = api.getCartCount(Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID)
                 , loginResponse.getToken());
@@ -412,7 +463,7 @@ public class DashboardActivity extends AppCompatActivity implements CategoryCall
                 Log.e("EXCEPTION", t.getLocalizedMessage());
             }
         });
-    }
+    }*/
     public void getCart(String deviceId, String token) {
         ServiceApi api = ApiClient.getClient().create(ServiceApi.class);
         Call<CartRequest> call = api.getCart(deviceId, token);

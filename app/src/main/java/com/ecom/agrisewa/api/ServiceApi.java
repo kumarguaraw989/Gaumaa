@@ -3,6 +3,7 @@ package com.ecom.agrisewa.api;
 import com.ecom.agrisewa.model.AddToCart;
 import com.ecom.agrisewa.model.AddressRequest;
 import com.ecom.agrisewa.model.BannerRequest;
+import com.ecom.agrisewa.model.CartCount;
 import com.ecom.agrisewa.model.CartRequest;
 import com.ecom.agrisewa.model.CategoryRequest;
 import com.ecom.agrisewa.model.DeleteCart;
@@ -96,7 +97,7 @@ public interface ServiceApi {
             , @Field("token") String token);
     @FormUrlEncoded
     @POST("cartcount")
-    Call<CartRequest> getCartCount(@Field("device_id") String device_id
+    Call<CartCount> getCartCount(@Field("device_id") String device_id
             , @Field("token") String token);
 
     @FormUrlEncoded
