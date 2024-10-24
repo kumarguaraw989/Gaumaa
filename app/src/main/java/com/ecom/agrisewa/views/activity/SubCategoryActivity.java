@@ -1,5 +1,6 @@
 package com.ecom.agrisewa.views.activity;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
@@ -33,6 +34,7 @@ import com.ecom.agrisewa.handler.CartCallback;
 import com.ecom.agrisewa.handler.ProductCallback;
 import com.ecom.agrisewa.handler.SubCategoryCallback;
 import com.ecom.agrisewa.model.CartAmount;
+import com.ecom.agrisewa.model.CartCount;
 import com.ecom.agrisewa.model.CartRequest;
 import com.ecom.agrisewa.model.CartResponse;
 import com.ecom.agrisewa.model.CategoryResponse;
@@ -109,7 +111,34 @@ public class SubCategoryActivity extends AppCompatActivity implements SubCategor
     protected void onResume() {
         super.onResume();
         getSubCategory(categoryResponse.getId());
+        getCartCount();
     }
+
+    public void getCartCount() {
+        ServiceApi api = ApiClient.getClient().create(ServiceApi.class);
+        @SuppressLint("HardwareIds") Call<CartCount> call = api.getCartCount(
+                Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID),
+                loginResponse.getToken()
+        );
+
+        call.enqueue(new Callback<CartCount>() {
+            @Override
+            public void onResponse(Call<CartCount> call, Response<CartCount> response) {
+                int cartCountValue = response.body().getCount();
+                Log.e("TAG", "onResponse: getCartCount"+cartCountValue);
+                TextView cartCountTextView = findViewById(R.id.cart_count);
+                if (response.body()!=null&&response.body().getStatus()){
+                    cartCountTextView.setText(String.valueOf(cartCountValue));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<CartCount> call, Throwable throwable) {
+                Log.e("EXCEPTION", throwable.getLocalizedMessage());
+            }
+        });
+    }
+
 
     public void getSubCategory(String category) {
         ServiceApi api = ApiClient.getClient().create(ServiceApi.class);

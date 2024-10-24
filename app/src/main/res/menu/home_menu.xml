@@ -6,7 +6,6 @@
         android:id="@+id/notification"
         android:orderInCategory="100"
         android:title="Notification"
-        app:actionLayout="@layout/actionbar_notfication_icon"
         android:icon="@drawable/notification"
         app:showAsAction="always" />
 
@@ -15,7 +14,6 @@
         android:id="@+id/cart"
         android:orderInCategory="100"
         android:title="Cart"
-        app:actionLayout="@layout/actionbar_cart_icon"
         android:icon="@drawable/cart"
         app:showAsAction="always" />
 

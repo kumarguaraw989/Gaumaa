@@ -13,7 +13,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/main_color"
-        app:menu="@menu/home_menu"
         app:navigationIcon="@drawable/back"
         app:navigationIconTint="@color/white"
         app:subtitle="Product Details"
@@ -21,7 +20,72 @@
         app:subtitleTextColor="@color/white"
         app:title="Product Name"
         app:titleTextAppearance="@style/TextAppearance.Material3.BodyLarge"
-        app:titleTextColor="@color/white" />
+        app:titleTextColor="@color/white">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+            <RelativeLayout
+                android:visibility="gone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                >
+                <!-- Notification Icon -->
+                <ImageView
+                    android:id="@+id/iv_notification_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="8dp"
+                    android:src="@drawable/notification" />
+
+
+                <!-- Notification Count -->
+                <TextView
+                    android:id="@+id/notification_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignRight="@id/iv_notification_icon"
+                    android:layout_alignTop="@id/iv_notification_icon"
+                    android:text="0"
+                    android:textSize="10sp"
+                    android:background="@drawable/rounded_notification_square"
+                    android:textColor="@color/main_color"
+                    android:gravity="center"
+                    android:padding="2dp" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp">
+                <!-- Cart Icon -->
+                <ImageView
+                    android:id="@+id/iv_cart_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/cart_bg_main"
+                    android:padding="8dp" />
+
+                <!-- Cart Count -->
+                <TextView
+                    android:id="@+id/cart_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignRight="@id/iv_cart_icon"
+                    android:layout_alignTop="@id/iv_cart_icon"
+                    android:text="0"
+                    android:textSize="10sp"
+                    android:background="@drawable/rounded_notification_square"
+                    android:textColor="@color/main_color"
+                    android:gravity="center"
+                    android:padding="2dp" />
+            </RelativeLayout>
+        </LinearLayout>
+
+    </com.google.android.material.appbar.MaterialToolbar>
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"

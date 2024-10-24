@@ -114,8 +114,8 @@ public class DashboardActivity extends AppCompatActivity implements CategoryCall
             String[] address = location.split("-");
             Log.e("CITY", address[0] + "");
             Log.e("LOCATION", address[1] + "");
-            toolBar.setTitle(address[0]);
-            toolBar.setSubtitle(address[1]);
+//            toolBar.setTitle(address[0]);
+//            toolBar.setSubtitle(address[1]);
         }
 
         toolBar.setNavigationOnClickListener(new View.OnClickListener() {

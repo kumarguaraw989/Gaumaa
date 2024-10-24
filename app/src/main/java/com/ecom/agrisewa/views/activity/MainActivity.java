@@ -41,7 +41,21 @@ public class MainActivity extends AppCompatActivity {
         });
 
         localStorage = LocalStorage.getInstance(MainActivity.this);
-        askPermission();
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Log.e("1", "check splash !");
+                    if (localStorage.getLoginModel().isEmpty()) {
+                        Log.e("2", "check splash1 !");
+                        startActivity(new Intent(MainActivity.this, LoginActivity.class));
+                        finishAffinity();
+                    } else {
+                        Log.e("3", "check splash2 !");
+                        startActivity(new Intent(MainActivity.this, DashboardActivity.class));
+                        finishAffinity();
+                    }
+            }
+        }, 3000);
     }
 
     public void askPermission() {
