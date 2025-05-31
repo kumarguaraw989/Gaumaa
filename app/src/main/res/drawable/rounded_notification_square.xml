@@ -1,0 +1,6 @@
+<!-- res/drawable/counter_circle.xml -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="#DEDDDD" /> <!-- Change to desired color -->
+    <corners android:radius="999dp" />  <!-- Ensure the radius is large enough for a full circle -->
+    <size android:width="20dp" android:height="20dp"/> <!-- Adjust size as needed -->
+</shape>

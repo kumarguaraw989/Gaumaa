@@ -84,7 +84,7 @@ public class DashboardActivity extends AppCompatActivity implements CategoryCall
     FeaturedProductAdapter featuredProductAdapter;
     LocalStorage localStorage;
     CartAmount cartAmount;
-
+    ImageView cartIcon;
 
     //my slider code
     private List<String> imageList;
@@ -96,7 +96,7 @@ public class DashboardActivity extends AppCompatActivity implements CategoryCall
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
-
+        cartIcon = findViewById(R.id.iv_cart_icon);
 //        slider = findViewById(R.id.slider);
         MaterialToolbar toolBar = findViewById(R.id.toolBar);
         categoryRecycler = findViewById(R.id.categoryRecycler);
@@ -123,6 +123,11 @@ public class DashboardActivity extends AppCompatActivity implements CategoryCall
             public void onClick(View v) {
                 showDrawerDialog();
             }
+        });
+        cartIcon.setOnClickListener(v->{
+            Intent intent = new Intent(DashboardActivity.this, CheckoutActivity.class);
+            intent.putExtra("cartAmount", cartAmount);
+            startActivity(intent);
         });
     }
 
